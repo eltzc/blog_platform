@@ -16,6 +16,12 @@
             <nav class="site-nav">
                 <a href="/">{% if language == 'RU' %}Главная{% else %}Home{% endif %}</a>
                 <a href="/create/">{% if language == 'RU' %}Создать пост{% else %}Create Post{% endif %}</a>
+                <form method="post" action="/post/{{ post.id }}/delete/" style="display:inline-block; margin-left: 12px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn" onclick="return confirm('{% if language == 'RU' %}Удалить пост?{% else %}Delete this post?{% endif %}')">
+                        {% if language == 'RU' %}Удалить{% else %}Delete{% endif %}
+                    </button>
+                </form>
             </nav>
         </div>
     </header>

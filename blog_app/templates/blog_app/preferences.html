@@ -42,9 +42,18 @@
             <div class="form-row">
                 <label>{% if language == 'RU' %}Категории{% else %}Categories{% endif %}</label>
                 <div class="checkboxes">
-                    <label><input type="checkbox" name="categories" value="tech"> Tech</label>
-                    <label><input type="checkbox" name="categories" value="lifestyle"> Lifestyle</label>
-                    <label><input type="checkbox" name="categories" value="travel"> Travel</label>
+                    <label>
+                        <input type="checkbox" name="categories" value="tech">
+                        {% if language == 'RU' %}Технологии{% else %}Tech{% endif %}
+                    </label>
+                    <label>
+                        <input type="checkbox" name="categories" value="lifestyle">
+                        {% if language == 'RU' %}Образ жизни{% else %}Lifestyle{% endif %}
+                    </label>
+                    <label>
+                        <input type="checkbox" name="categories" value="travel">
+                        {% if language == 'RU' %}Путешествия{% else %}Travel{% endif %}
+                    </label>
                 </div>
             </div>
 

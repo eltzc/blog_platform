@@ -58,27 +58,5 @@
 ## Данные
 В проекте данные постов заданы прямо в коде (`blog_app/views.py`, список `posts`). При создании поста загруженное изображение сохраняется в `static/images/`; если изображение не загружено — используется `default.svg`.
 
-## Тестирование (ручное)
-- Preferences: выберите тёмную тему и RU, сохраните — проверьте все страницы.
-- Last Visited: откройте несколько постов, проверьте блок «Последние посещенные» на главной.
-- Создание поста: создайте пост без изображения — отобразится `default.svg`.
-- Адаптивность: сузьте окно браузера до < 900px.
 
-## Git и публикация
-1. Инициализация репозитория и первый коммит:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: Django blog with cookies, themes, and styling"
-   git branch -M main
-   ```
-2. Создайте пустой репозиторий на GitHub: `blog_platform`.
-3. Свяжите и запушьте:
-   ```bash
-   git remote add origin https://github.com/<YOUR_USERNAME>/blog_platform.git
-   git push -u origin main
-   ```
 
-## Примечания
-- Если Edge показывает старые стили — сделайте жесткую перезагрузку (Ctrl+F5) или отключите кэш в DevTools → Network → Disable cache.
-- Для продакшена используйте `collectstatic` и хеширование статики (ManifestStaticFilesStorage).

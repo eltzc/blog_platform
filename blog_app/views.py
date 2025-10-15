@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 import json
 import os
 from django.conf import settings
 
 # Sample data: blog posts
-posts = [
+default_posts = [
     {
         'id': 1,
         'title': 'Tech Trends 2025',
@@ -29,6 +29,36 @@ posts = [
     },
 ]
 
+# Data persistence helpers
+
+def _posts_file_path():
+    data_dir = settings.BASE_DIR / 'data'
+    data_dir.mkdir(exist_ok=True)
+    return data_dir / 'posts.json'
+
+def ensure_data_file():
+    path = _posts_file_path()
+    if not path.exists():
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(default_posts, f, ensure_ascii=False, indent=2)
+
+def load_posts():
+    ensure_data_file()
+    path = _posts_file_path()
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return list(default_posts)
+
+def save_posts(posts_list):
+    path = _posts_file_path()
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(posts_list, f, ensure_ascii=False, indent=2)
+
+# Ensure data file exists at import
+ensure_data_file()
+
 def get_user_prefs(request):
     return {
         'theme': request.COOKIES.get('theme', 'light'),
@@ -39,8 +69,9 @@ def get_user_prefs(request):
 
 def home(request):
     prefs = get_user_prefs(request)
-    filtered_posts = [post for post in posts if post['category'] in prefs['preferred_categories']]
-    visited_posts = [post for post in posts if post['id'] in prefs['last_visited']]
+    posts_list = load_posts()
+    filtered_posts = [post for post in posts_list if post['category'] in prefs['preferred_categories']]
+    visited_posts = [post for post in posts_list if post['id'] in prefs['last_visited']]
     context = {
         'posts': filtered_posts,
         'visited_posts': visited_posts,
@@ -63,7 +94,8 @@ def preferences(request):
     return render(request, 'blog_app/preferences.html', {'theme': prefs['theme'], 'language': prefs['language']})
 
 def view_post(request, post_id):
-    post = next((p for p in posts if p['id'] == post_id), None)
+    posts_list = load_posts()
+    post = next((p for p in posts_list if p['id'] == post_id), None)
     if not post:
         return HttpResponse("Post not found", status=404)
     last_visited = json.loads(request.COOKIES.get('last_visited', '[]'))
@@ -87,7 +119,8 @@ def create_post(request):
         image = request.FILES.get('image')
 
         # Generate new post ID
-        new_id = max([post['id'] for post in posts], default=0) + 1
+        posts_list = load_posts()
+        new_id = max([post['id'] for post in posts_list], default=0) + 1
 
         # Handle image
         image_name = 'default.svg'  # Default image if none uploaded
@@ -106,9 +139,19 @@ def create_post(request):
             'category': category,
             'image': image_name,
         }
-        posts.append(new_post)
+        posts_list.append(new_post)
+        save_posts(posts_list)
         return redirect('home')
     return render(request, 'blog_app/create_post.html', {
         'theme': request.COOKIES.get('theme', 'light'),
         'language': request.COOKIES.get('language', 'EN'),
     })
+
+
+def delete_post(request, post_id):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+    posts_list = load_posts()
+    posts_list = [p for p in posts_list if p['id'] != post_id]
+    save_posts(posts_list)
+    return redirect('home')
