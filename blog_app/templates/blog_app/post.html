@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ language|default:'EN' }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% if theme == 'dark' %}
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}">
+    {% endif %}
+</head>
+<body class="{{ theme|default:'light' }}">
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">{{ post.title }}</h1>
+            <nav class="site-nav">
+                <a href="/">{% if language == 'RU' %}Главная{% else %}Home{% endif %}</a>
+                <a href="/create/">{% if language == 'RU' %}Создать пост{% else %}Create Post{% endif %}</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container post-article">
+        {% if post.image %}
+        <img class="post-cover" src="{% static 'images/'|add:post.image %}" alt="{{ post.title }}">
+        {% endif %}
+        <article class="content">
+            <p>{{ post.content }}</p>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">© Blog Platform</div>
+    </footer>
+</body>
+</html>

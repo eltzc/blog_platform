@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Platform</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% if theme == 'dark' %}
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}">
+    {% endif %}
+</head>
+<body class="{{ theme }}">
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">{% if language == 'RU' %}Платформа для блогов{% else %}Blog Platform{% endif %}</h1>
+            <nav class="site-nav">
+                <a href="/preferences/">{% if language == 'RU' %}Настройки{% else %}Preferences{% endif %}</a>
+                <a href="/create/">{% if language == 'RU' %}Создать пост{% else %}Create Post{% endif %}</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>
+                        {% if language == 'RU' %}
+                            Создавайте и делитесь историями
+                        {% else %}
+                            Create and share your stories
+                        {% endif %}
+                    </h2>
+                    <p class="hero-subtitle">
+                        {% if language == 'RU' %}
+                            Пишите без усилий, вдохновляйте других и развивайте свой голос в сообществе авторов.
+                        {% else %}
+                            Write effortlessly, inspire others, and grow your voice in a community of creators.
+                        {% endif %}
+                    </p>
+                </div>
+                <img class="hero-image" src="{% static 'images/hero.svg' %}" alt="{% if language == 'RU' %}Иллюстрация о публикации постов{% else %}Illustration about publishing posts{% endif %}" loading="lazy">
+            </div>
+        </section>
+
+        <section class="posts-section">
+            <div class="container">
+                <h2 class="section-title">{% if language == 'RU' %}Посты{% else %}Posts{% endif %}</h2>
+                <ul class="posts-list">
+                {% for post in posts %}
+                    <li class="post-card">
+                        <div class="post-card-content">
+                            <h3 class="post-title"><a href="/post/{{ post.id }}/">{{ post.title }}</a></h3>
+                            <p class="post-excerpt">{{ post.content }}</p>
+                        </div>
+                        <div class="post-media">
+                            <img src="{% static 'images/'|add:post.image %}" alt="{{ post.title }}" class="post-image">
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </section>
+
+        <section class="visited-section">
+            <div class="container">
+                <h2 class="section-title">{% if language == 'RU' %}Последние посещенные{% else %}Last Visited{% endif %}</h2>
+                <ul class="visited-list">
+                {% for post in visited_posts %}
+                    <li class="visited-item">{{ post.title }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

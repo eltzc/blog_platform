@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Lifestyle</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="450">
+      <stop offset="0%" stop-color="#dcfce7"/>
+      <stop offset="100%" stop-color="#f0fdf4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="16" fill="url(#bg)"/>
+  <g opacity="0.9">
+    <circle cx="260" cy="220" r="60" fill="#86efac"/>
+    <rect x="330" y="170" width="260" height="30" rx="8" fill="#34d399"/>
+    <rect x="330" y="210" width="200" height="16" rx="8" fill="#6ee7b7"/>
+    <rect x="330" y="240" width="220" height="16" rx="8" fill="#a7f3d0"/>
+  </g>
+</svg>

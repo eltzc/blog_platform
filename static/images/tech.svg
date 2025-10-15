@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Tech</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="450">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="100%" stop-color="#e0e7ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="16" fill="url(#bg)"/>
+  <g stroke="#3b82f6" stroke-width="4" opacity="0.8">
+    <rect x="120" y="120" width="220" height="160" rx="12" fill="#ffffff"/>
+    <rect x="170" y="160" width="120" height="8" rx="4"/>
+    <rect x="170" y="180" width="160" height="8" rx="4"/>
+    <rect x="420" y="160" width="260" height="120" rx="12" fill="#ffffff"/>
+    <circle cx="450" cy="200" r="18" fill="#bfdbfe"/>
+    <path d="M480 200 h170"/>
+    <path d="M420 260 h260"/>
+  </g>
+</svg>

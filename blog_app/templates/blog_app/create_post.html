@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ language|default:'EN' }}">
+<head>
+    <meta charset="UTF-8">
+     <title>{% if language == 'RU' %}Создать пост{% else %}Create Post{% endif %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% if theme == 'dark' %}
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}">
+    {% endif %}
+</head>
+<body class="{{ theme|default:'light' }}">
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">{% if language == 'RU' %}Создать пост{% else %}Create Post{% endif %}</h1>
+            <nav class="site-nav">
+                <a href="/">{% if language == 'RU' %}Главная{% else %}Home{% endif %}</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <form method="post" enctype="multipart/form-data" class="form-card">
+            {% csrf_token %}
+            <div class="form-row">
+                <label for="title">{% if language == 'RU' %}Заголовок{% else %}Title{% endif %}</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-row">
+                <label for="content">{% if language == 'RU' %}Содержимое{% else %}Content{% endif %}</label>
+                <textarea id="content" name="content" required></textarea>
+            </div>
+            <div class="form-row">
+                <label for="category">{% if language == 'RU' %}Категория{% else %}Category{% endif %}</label>
+                <select id="category" name="category" required>
+                    <option value="tech">Tech</option>
+                    <option value="lifestyle">Lifestyle</option>
+                    <option value="travel">Travel</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="image">{% if language == 'RU' %}Изображение{% else %}Image{% endif %}</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn">{% if language == 'RU' %}Сохранить{% else %}Save{% endif %}</button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">© Blog Platform</div>
+    </footer>
+</body>
+</html>

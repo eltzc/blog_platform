@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ language|default:'EN' }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if language == 'RU' %}Настройки{% else %}Preferences{% endif %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% if theme == 'dark' %}
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}">
+    {% endif %}
+</head>
+<body class="{{ theme|default:'light' }}">
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">{% if language == 'RU' %}Настройки{% else %}Preferences{% endif %}</h1>
+            <nav class="site-nav">
+                <a href="/">{% if language == 'RU' %}Главная{% else %}Home{% endif %}</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <form class="form-card" method="post">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <label for="theme">{% if language == 'RU' %}Тема{% else %}Theme{% endif %}</label>
+                <select id="theme" name="theme">
+                    <option value="light">{% if language == 'RU' %}Светлая{% else %}Light{% endif %}</option>
+                    <option value="dark">{% if language == 'RU' %}Тёмная{% else %}Dark{% endif %}</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="language">{% if language == 'RU' %}Язык{% else %}Language{% endif %}</label>
+                <select id="language" name="language">
+                    <option value="EN">English</option>
+                    <option value="RU">Русский</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label>{% if language == 'RU' %}Категории{% else %}Categories{% endif %}</label>
+                <div class="checkboxes">
+                    <label><input type="checkbox" name="categories" value="tech"> Tech</label>
+                    <label><input type="checkbox" name="categories" value="lifestyle"> Lifestyle</label>
+                    <label><input type="checkbox" name="categories" value="travel"> Travel</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <button type="submit" class="btn">{% if language == 'RU' %}Сохранить{% else %}Save{% endif %}</button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">© Blog Platform</div>
+    </footer>
+</body>
+</html>
